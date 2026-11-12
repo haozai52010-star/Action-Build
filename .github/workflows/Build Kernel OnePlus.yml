@@ -1350,7 +1350,7 @@ jobs:
           cd kernel_workspace/kernel_platform/common
           if [[ "${CPU}" == sm* ]]; then
             echo "修复启用IPv6 NAT后可能出现的设备误报…"
-            patch -p1 -F 3 < "${PATCH_DIR}/IPv6_NAT_FIX.patch"
+            pf="${PATCH_DIR}/IPv6_NAT_FIX.patch"; [ -f "$pf" ] || pf="${GITHUB_WORKSPACE}/patches/IPv6_NAT_FIX.patch"; if [ -f "$pf" ]; then patch -p1 -F 3 < "$pf" || echo "ipv6 nat patch failed, continue"; else echo "IPv6_NAT_FIX.patch not found, skip"; fi
           else
             echo "你的设备不支持 IPv6 NAT，跳过此步骤。"
           fi
